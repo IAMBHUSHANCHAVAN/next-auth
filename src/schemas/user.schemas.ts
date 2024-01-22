@@ -1,8 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
+import { Address } from './address.schemas';
 enum Gender {
-  Male,
-  Female,
-  Others,
+  Male = 'Male',
+  Female = 'Female',
+  Others = 'Others',
 }
 @Schema()
 export class User {
@@ -16,8 +18,8 @@ export class User {
   mobile: string;
   @Prop()
   gender: Gender;
-  @Prop()
-  address: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Address' })
+  address?: Address;
   @Prop({ required: true })
   password: string;
 }
