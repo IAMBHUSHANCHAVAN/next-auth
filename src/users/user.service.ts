@@ -31,7 +31,9 @@ export class UserService {
     return this.userModel.find().populate('address');
   }
   getById(userId: string) {
-    const singleUser = this.userModel.findById(userId).populate('address');
+    const singleUser = this.userModel
+      .findById(userId)
+      .populate(['address', 'posts']);
     // console.log('this', singleUser);
     return singleUser;
   }
