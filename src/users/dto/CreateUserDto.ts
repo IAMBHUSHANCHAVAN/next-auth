@@ -20,6 +20,9 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string;
   @IsOptional()
+  @IsString()
+  token: string;
+  @IsOptional()
   @ValidateNested()
   @Type(() => UserAddressDto)
   address?: UserAddressDto;

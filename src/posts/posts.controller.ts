@@ -7,16 +7,19 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 
 import { PostDto } from 'src/users/dto/PostDto';
 import { PostService } from './posts.service';
 import { Postpipe } from './pipe/post.pipe';
+import { AuthGuard } from './guard/post.guard';
+// import { AuthenticatePostGuard } from './guard/post.guard';
 
 @Controller('post')
 export class PostsController {
   constructor(private postService: PostService) {}
-
+  @UseGuards(AuthGuard)
   @Post(':userId')
   createPost(
     @Param('userId') userId: string,
