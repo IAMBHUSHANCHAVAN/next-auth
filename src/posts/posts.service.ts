@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Posts } from 'src/schemas/post.schemas';
@@ -23,5 +23,21 @@ export class PostService {
       },
     });
     return savedPost;
+  }
+  getallPost() {
+    return this.postModel.find();
+  }
+  async getbyid(userid: string) {
+    const user = await this.postModel.findById(userid);
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    return user;
+  }
+  async updatePost(postId: string, postData: PostDto) {
+    return this.postModel.findByIdAndUpdate(postId, postData, { new: true });
+  }
+  deletePost(postId: string) {
+    return this.postModel.findByIdAndDelete(postId);
   }
 }
